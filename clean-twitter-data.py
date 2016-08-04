@@ -33,4 +33,4 @@ def doIt(csv_file_name):
 	wc = createWordCloud(tweets)
 	visualizeWordCloud(wc)
 
-doIt('./realDonaldTrump_tweets.csv')
+#doIt('./realDonaldTrump_tweets.csv')
