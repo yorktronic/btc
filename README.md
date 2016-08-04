@@ -1,5 +1,5 @@
 # Donald Trump v. Hillary Clinton -- Twitter Word Clouds #
-*This is a work in progress, I'm refining things to get more interesting views of each candidate's word cloud.*
+*This is a work in progress, I'm refining things as there are obviously some false positives ("don", "ly", dtrump", and things like that). Keep in mind that this is coming from Twitter data, and from Donald Trump's twitter no less, so there is surely going to be some wonkiness in the results.*
 
 I created this word cloud from 3223 tweets by <a href="https://twitter.com/realDonaldTrump" target="_blank">@realDonaldTrump</a> and 3244 tweets by <a href="https://twitter.com/HillaryClinton" target="_blank">@HillaryClinton</a>. It's not as salacious as I had hoped, but none the less pretty interesting.
 
