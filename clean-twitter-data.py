@@ -9,7 +9,7 @@ import csv
 def cleanTweets(csv_file_name):
 	df = pd.read_csv(csv_file_name)
 	junk = re.compile("al|RT|\n|&.*?;|http[s](?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)*")
-	names = ['hillary', 'trump', 'cruz', 'bernie', 'sanders', 'ted']
+	# names = ['hillary', 'trump', 'cruz', 'bernie', 'sanders', 'ted']
 	tweets = [junk.sub(" ", s) for s in df.text]
 	
 	return tweets
@@ -18,7 +18,7 @@ def createWordCloud(tweets):
 	vec = TfidfVectorizer(stop_words='english', ngram_range=(1,2), max_df=.5)
 	tfv = vec.fit_transform(tweets)
 	terms = vec.get_feature_names()
-	wc = WordCloud(height=3000, width=3000, max_words=800).generate(" ".join(terms))
+	wc = WordCloud(height=1000, width=1000, max_words=300).generate(" ".join(terms))
 
 	return wc
 
