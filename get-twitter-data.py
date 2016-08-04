@@ -1,8 +1,36 @@
-import twitter
-consumer_key = "fZovH0fFnbSMb3EKKJazxIIkr"
-consumer_secret = "M73H7prpgoDz3Zh2RGg6BMal97Ajc9C0KvOxGI7VVm1TDbG938"
-access_token_key = "407343684-oxBp1vDzdkVC7YvEFHZYbS4fgUw8QpS2HvMcpu2E"
-access_token_secret = "Gh6K1iexwvQMVTo52TJmG7mSbAWzf0TtdWd4blSNOyzuz"
+import re
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction.text import TfidfVectorizer
+from wordcloud import WordCloud
+from string import punctuation
+import csv
 
-api = twitter.Api(consumer_key=consumer_key, consumer_secret=consumer_secret,
-	access_token_key=access_token_key, access_token_secret=access_token_secret)
+def cleanTweets(csv_file_name):
+	df = pd.read_csv(csv_file_name)
+	junk = re.compile("al|RT|\n|&.*?;|http[s](?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)*")
+	names = ['hillary', 'trump', 'cruz', 'bernie', 'sanders', 'ted']
+	tweets = [junk.sub(" ", s) for s in df.text]
+	
+	return tweets
+
+def createWordCloud(tweets):
+	vec = TfidfVectorizer(stop_words='english', ngram_range=(1,2), max_df=.5)
+	tfv = vec.fit_transform(tweets)
+	terms = vec.get_feature_names()
+	wc = WordCloud(height=1000, width=1000, max_words=1000).generate(" ".join(terms))
+
+	return wc
+
+def visualizeWordCloud(wc):
+	plt.figure(figsize=(10,10))
+	plt.imshow(wc)
+	plt.axis("off")
+	plt.show()
+
+def doIt(csv_file_name):
+	tweets = cleanTweets(csv_file_name)
+	wc = createWordCloud(tweets)
+	visualizeWordCloud(wc)
+
+doIt('./realDonaldTrump_tweets.csv')
