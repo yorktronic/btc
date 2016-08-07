@@ -3,11 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from wordcloud import WordCloud
-from string import punctuation
-import csv
 
 def cleanTweets(csv_file_name):
 	df = pd.read_csv(csv_file_name)
+	# convert don't to don't to see if it gets rid of the occurances of "don"
+    # Remove all words that appear after hashtags
 	junk = re.compile("al|RT|\n|&.*?;|http[s](?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)*")
 	# names = ['hillary', 'trump', 'cruz', 'bernie', 'sanders', 'ted']
 	tweets = [junk.sub(" ", s) for s in df.text]
