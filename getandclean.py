@@ -7,6 +7,7 @@
 import tweepy
 import credentials
 from tweepy import OAuthHandler
+import json
 
 consumer_key = credentials.twitter_consumer_key
 consumer_secret = credentials.twitter_consumer_secret
@@ -60,17 +61,16 @@ def storeTweetsJson(tweets, screen_name, clean=False):
 
     # If the tweets are already cleaned, save them as screen_name_clean.txt
     if clean:
-        with open('./data/tweets/{}_clean.json'.format(screen_name), 'w') as outFile:
+        with open('./data/{}_clean.json'.format(screen_name), 'w') as outFile:
             json.dump(outTweets, outFile)
     # Otherwise just save them with the screen_name
     else:
-        with open('./data/tweets/{}.json'.format(screen_name), 'w') as outFile:
+        with open('./data/{}.json'.format(screen_name), 'w') as outFile:
             json.dump(outTweets, outFile)
 
     print "...{} tweets by {} saved as {}".format(len(tweets), screen_name, outFile)
 
-def toCsv(tweets):
-    # Accepts a datafr
+def toCsv(table_name):
     import os
 
     for table_name, df in tables.iteritems():

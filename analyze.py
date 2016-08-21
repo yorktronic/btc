@@ -8,11 +8,13 @@ import getandclean as gc
 import matplotlib as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from wordcloud import WordCloud
+import pandas as pd
 
-accounts = ['@realDonaldTrump']
+accounts = ['realDonaldTrump', 'HillaryClinton']
 
 def getTwitterData(acct_names):
 
+    tweets_all_accounts = {}
     # Save the tweets in CSV format once cleaned
     for name in acct_names:
         print "getting tweets for screen name {}".format(name)
@@ -20,6 +22,9 @@ def getTwitterData(acct_names):
         for tweet in tweets:
             tweet.text = gc.cleanTweet(tweet.text)
         gc.storeTweetsJson(tweets, name, clean=True)
+        tweets_all_accounts['name'] = tweets
+
+    return tweets_all_accounts
 
 def createWordCloud(tweets):
     vec = TfidfVectorizer(stop_words='english', ngram_range=(1,2), max_df=.5)
@@ -35,7 +40,6 @@ def visualizeWordCloud(wc):
     plt.axis("off")
     plt.show()
 
-def doIt(file_name):
-    tweets = cleanTweets(file_name)
-    wc = createWordCloud(tweets)
+def doIt(tweets):
+    wc = createWordCloud(tweets.text)
     visualizeWordCloud(wc)
