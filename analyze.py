@@ -11,8 +11,6 @@ from wordcloud import WordCloud
 import pandas as pd
 import json
 
-accounts = ['realDonaldTrump', 'HillaryClinton']
-
 def getCleanTwitterData(acct_names):
     # Takes in a list of account names and pulls the last 3240 tweepy Status objects for all provided account names
     # Returns a dictionary where the account names as keys and a list of tweepy Status objects as values
@@ -28,6 +26,7 @@ def getCleanTwitterData(acct_names):
 
     return tweets_all_accounts
 
+# TODO: get subscriber counts
 def toDataframe(tweets_all_accounts):
     # Takes in a dictionary with keys as account names and values a list of tweepy Status objects
     # Returns a DataFrame with all tweets
@@ -52,6 +51,7 @@ def toDataframe(tweets_all_accounts):
             df['user'] = tweet.user
             df['date'] = tweet.created_at
 
+    return df
 
 def createWordCloud(tweets):
     vec = TfidfVectorizer(stop_words='english', ngram_range=(1,2), max_df=.5)
