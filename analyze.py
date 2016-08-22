@@ -9,22 +9,49 @@ import matplotlib as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from wordcloud import WordCloud
 import pandas as pd
+import json
 
 accounts = ['realDonaldTrump', 'HillaryClinton']
 
-def getTwitterData(acct_names):
-
+def getCleanTwitterData(acct_names):
+    # Takes in a list of account names and pulls the last 3240 tweepy Status objects for all provided account names
+    # Returns a dictionary where the account names as keys and a list of tweepy Status objects as values
     tweets_all_accounts = {}
-    # Save the tweets in CSV format once cleaned
     for name in acct_names:
         print "getting tweets for screen name {}".format(name)
         tweets = gc.getTweets(name)
+
         for tweet in tweets:
             tweet.text = gc.cleanTweet(tweet.text)
-        gc.storeTweetsJson(tweets, name, clean=True)
+
         tweets_all_accounts['name'] = tweets
 
     return tweets_all_accounts
+
+def toDataframe(tweets_all_accounts):
+    # Takes in a dictionary with keys as account names and values a list of tweepy Status objects
+    # Returns a DataFrame with all tweets
+
+    # Get a list of the account names we're working with in case we need them
+    acct_names = tweets_all_accounts.keys()
+
+    # Map dataframe columns to tweepy Status object structure
+    mapping = {'tweetID': 'id', 'author': 'author', 'retweeted': 'retweeted', 'retweet_count': 'retweet_count',
+               'user': 'user', 'created_at': 'date'}
+
+    df = pd.DataFrame(columns=mapping.keys())
+
+    for name in acct_names:
+        # For each user, populate df with tweets
+        tweets = tweets_all_accounts[name]
+        for tweet in tweets:
+            df['id'] = tweet.id
+            df['author'] = tweet.author
+            df['retweeted'] = tweet.retweeted
+            df['retweet_count'] = tweet.retweet_count
+            df['user'] = tweet.user
+            df['date'] = tweet.created_at
+
 
 def createWordCloud(tweets):
     vec = TfidfVectorizer(stop_words='english', ngram_range=(1,2), max_df=.5)

@@ -70,7 +70,6 @@ def storeTweetsJson(tweets, screen_name, clean=False):
 
     print "...{} tweets by {} saved as {}".format(len(tweets), screen_name, outFile)
 
-
 def cleanTweet(tweet):
     # Takes in string (the text from a tweet object) and returns a tokenized list of strings w/ stopwords removed
 
