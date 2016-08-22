@@ -52,7 +52,7 @@ def getTweets(screen_name):
     return tweets
 
 def storeTweetsJson(tweets, screen_name, clean=False):
-    # Takes in a list of tweets and the user's screen name and whether or not they are cleaned tweets
+    # Takes in a list of tweet objects and the user's screen name and whether or not the tweet text has been cleaned
     # Stores them in a JSON-formatted text file
 
     outTweets = []
@@ -70,16 +70,6 @@ def storeTweetsJson(tweets, screen_name, clean=False):
 
     print "...{} tweets by {} saved as {}".format(len(tweets), screen_name, outFile)
 
-def toCsv(table_name):
-    import os
-
-    for table_name, df in tables.iteritems():
-        file_path = "./data/{}.csv".format(table_name)
-        df.to_csv(path_or_buf=file_path, header=True, index=True)
-        # TODO refactor this to throw an exception if the file wasn't written and the function didn't break
-        pwd = os.path.dirname(os.path.realpath(__file__))
-        # some exception code here
-        print "Table {} successfully saved to {}".format(table_name, pwd + file_path[1:])
 
 def cleanTweet(tweet):
     # Takes in string (the text from a tweet object) and returns a tokenized list of strings w/ stopwords removed
