@@ -27,6 +27,7 @@ def getCleanTwitterData(acct_names):
     return tweets_all_accounts
 
 # TODO: get subscriber counts
+# TODO: repurpose this to handle pulling from json and from Status objects?
 def toDataframe(tweets_all_accounts):
     # Takes in a dictionary with keys as account names and values a list of tweepy Status objects
     # Returns a DataFrame with all tweets
@@ -40,6 +41,7 @@ def toDataframe(tweets_all_accounts):
 
     df = pd.DataFrame(columns=mapping.keys())
 
+    # TODO: get the attirbutes of the Object and use the provided info to create columns, rather than manually doing so
     for name in acct_names:
         # For each user, populate df with tweets
         tweets = tweets_all_accounts[name]
