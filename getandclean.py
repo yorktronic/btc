@@ -25,7 +25,7 @@ def getTweets(screen_name):
     tweets = []
 
     # Get most recent 200 tweets
-    new_tweets = api.user_timeline(screen_name = screen_name, count=200)
+    new_tweets = api.user_timeline(screen_name=screen_name, count=200)
 
     # Save most recent tweets
     tweets.extend(new_tweets)
